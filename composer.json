@@ -1,0 +1,19 @@
+{
+	"name" : "wildwolf/wp-cyrtolat",
+	"type" : "wordpress-plugin",
+	"description" : "WordPress plugin to transliterate cyrillic slugs into latin",
+	"keywords" : ["wordpress", "plugin", "cyrillic", "transliterate"],
+	"license" : "MIT",
+	"homepage" : "https://github.com/sjinks/wp-plugin-cyrtolat",
+	"authors" : [
+		{
+			"name" : "Volodymyr Kolesnykov",
+			"email" : "volodymyr@wildwolf.name",
+			"role" : "Developer"
+		}
+	],
+	"require" : {
+		"php" : ">=7.0.0",
+		"composer/installers" : "~1.0"
+	}
+}
