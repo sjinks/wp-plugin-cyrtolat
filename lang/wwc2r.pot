@@ -1,0 +1,23 @@
+#: ../inc/admin.php:41
+msgid "WW CyrToLat"
+msgstr ""
+
+#: ../inc/admin.php:47
+msgid "Transliterate post / page slugs"
+msgstr ""
+
+#: ../inc/admin.php:48
+msgid "Transliterate term slugs"
+msgstr ""
+
+#: ../inc/admin.php:49
+msgid "Transliterate file names"
+msgstr ""
+
+#: ../views/settings.php:3
+msgid "WW CyrToLat Settings"
+msgstr ""
+
+#: ../views/settings.php:9
+msgid "Save settings"
+msgstr ""
