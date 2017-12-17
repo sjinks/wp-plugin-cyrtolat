@@ -4,6 +4,11 @@ namespace WildWold\WordPress;
 
 class CyrToLat
 {
+    /**
+     * @var string
+     */
+    const OPTIONS_KEY = 'wwc2r';
+
     private static $self = null;
 
     private static $table = [
@@ -38,10 +43,38 @@ class CyrToLat
 
     private function __construct()
     {
-        add_filter('name_save_pre',        [$this, 'name_save_pre']);
-        add_filter('get_sample_permalink', [$this, 'get_sample_permalink']);
-        add_filter('wp_update_term_data',  [$this, 'wp_update_term_data'], 10, 4);
-        add_filter('wp_insert_term_data',  [$this, 'wp_insert_term_data'], 10, 3);
+        add_action('init', [$this, 'init']);
+    }
+
+    public function init()
+    {
+        static $defaults = [
+            'posts' => 0,
+            'terms' => 0,
+            'files' => 0
+        ];
+
+        register_setting('wwc2r', self::OPTIONS_KEY, ['default' => $defaults]);
+
+        $options = (array)get_option(self::OPTIONS_KEY);
+        $posts   = $options['posts'] ?? 0;
+        $terms   = $options['terms'] ?? 0;
+        $files   = $options['files'] ?? 0;
+
+        if ($posts) {
+            add_filter('get_sample_permalink',      [$this, 'get_sample_permalink']);
+            add_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 10, 2);
+            add_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'], 10, 2);
+        }
+
+        if ($terms) {
+            add_filter('wp_update_term_data', [$this, 'wp_update_term_data'], 10, 4);
+            add_filter('wp_insert_term_data', [$this, 'wp_insert_term_data'], 10, 3);
+        }
+
+        if ($files) {
+            add_filter('sanitize_file_name',  [$this, 'sanitize_file_name']);
+        }
     }
 
     private function getTable() : array
@@ -102,9 +135,20 @@ class CyrToLat
         return $name;
     }
 
+    public function wp_insert_post_data($data, $args)
+    {
+        $name = $this->transliterate(urldecode($data['post_name']), 'post_name');
+        $data['post_name'] = wp_unique_post_slug($name, $args['ID'] ?? 0, $data['post_status'], $data['post_type'], $data['post_parent']);
+        return $data;
+    }
+
+    public function wp_insert_attachment_data($data, $args)
+    {
+        return $this->wp_insert_post_data($data, $args);
+    }
+
     public function wp_insert_term_data($data, $taxonomy, $args)
     {
-        $args['slug'] = $data['slug'];
         $data['slug'] = wp_unique_term_slug($this->transliterate(urldecode($data['slug']), 'term'), (object)$args);
         return $data;
     }
@@ -112,6 +156,11 @@ class CyrToLat
     public function wp_update_term_data($data, $id, $taxonomy, $args)
     {
         return $this->wp_insert_term_data($data, $taxonomy, $args);
+    }
+
+    public function sanitize_file_name($name)
+    {
+        return $this->transliterate($name, 'file_name');
     }
 
     private function __clone()  {}

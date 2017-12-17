@@ -1,14 +1,20 @@
 <?php
 /*
 Plugin Name: WW CyrToLat
-Description: Transliterates cyrillic symbols in post names to latine ones.
+Description: Transliterates cyrillic symbols in post names to latin ones.
 Author: Volodymyr Kolesnykov <volodymyr@wildwolf.name>
-Version: 0.1
+Version: 0.2
 */
 
 use WildWold\WordPress\CyrToLat;
+use WildWold\WordPress\CyrToLatAdmin;
 
-defined('ABSPATH') or die();
+defined('ABSPATH') || die();
 
-require_once __DIR__ . '/cyrtolat.php';
+require_once __DIR__ . '/inc/cyrtolat.php';
 CyrToLat::instance();
+
+if (is_admin()) {
+    require_once __DIR__ . '/inc/admin.php';
+    CyrToLatAdmin::instance();
+}
