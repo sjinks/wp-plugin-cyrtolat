@@ -176,11 +176,6 @@ class CyrToLat
         return apply_filters('transliterate_name', $value, $what);
     }
 
-    public function name_save_pre($name)
-    {
-        return $this->transliterate($name, 'post_name');
-    }
-
     public function get_sample_permalink($name)
     {
         $name[1] = $this->transliterate($name[1], 'post_name');
