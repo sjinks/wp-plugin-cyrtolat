@@ -11,23 +11,39 @@ class CyrToLat
 
     private static $self = null;
 
+    private static $retable = [
+        '/зг/u'   => 'zgh',
+        '/Зг/u'   => 'Zgh',
+        '/\\bє/u' => 'ye',
+        '/\\Bє/u' => 'ie',
+        '/\\bї/u' => 'yi',
+        '/\\Bї/u' => 'i',
+        '/\\bй/u' => 'y',
+        '/\\Bй/u' => 'i',
+        '/\\bю/u' => 'yu',
+        '/\\Bю/u' => 'iu',
+        '/\\bя/u' => 'ya',
+        '/\\Bя/u' => 'ia',
+    ];
+
     private static $table = [
         'А' => 'A',  'Б' => 'B',  'В' => 'V',  'Г' => 'H',    'Ѓ' => 'G',
         'Ґ' => 'G',  'Д' => 'D',  'Е' => 'E',  'Ё' => 'YO',   'Є' => 'YE',
-        'Ж' => 'ZH', 'З' => 'Z',  'Ѕ' => 'Z',  'И' => 'I',    'Й' => 'Y',
+        'Ж' => 'ZH', 'З' => 'Z',  'Ѕ' => 'Z',  'И' => 'I',    'Й' => 'J',
         'Ј' => 'J',  'І' => 'I',  'Ї' => 'YI', 'К' => 'K',    'Ќ' => 'K',
         'Л' => 'L',  'Љ' => 'L',  'М' => 'M',  'Н' => 'N',    'Њ' => 'N',
         'О' => 'O',  'П' => 'P',  'Р' => 'R',  'С' => 'S',    'Т' => 'T',
-        'У' => 'U',  'Ў' => 'U',  'Ф' => 'F',  'Х' => 'KH',   'Ц' => 'C',
+        'У' => 'U',  'Ў' => 'U',  'Ф' => 'F',  'Х' => 'KH',   'Ц' => 'TS',
         'Ч' => 'CH', 'Џ' => 'DH', 'Ш' => 'SH', 'Щ' => 'SHCH', 'Ъ' => '',
         'Ы' => 'Y',  'Ь' => '',   'Э' => 'E',  'Ю' => 'YU',   'Я' => 'YA',
+
         'а' => 'a',  'б' => 'b',  'в' => 'v',  'г' => 'h',    'ѓ' => 'g',
         'ґ' => 'g',  'д' => 'd',  'е' => 'e',  'ё' => 'yo',   'є' => 'ye',
-        'ж' => 'zh', 'з' => 'z',  'ѕ' => 'z',  'и' => 'y',    'й' => 'i',
+        'ж' => 'zh', 'з' => 'z',  'ѕ' => 'z',  'и' => 'y',    'й' => 'j',
         'ј' => 'j',  'і' => 'i',  'ї' => 'yi', 'к' => 'k',    'ќ' => 'k',
         'л' => 'l',  'љ' => 'l',  'м' => 'm',  'н' => 'n',    'њ' => 'n',
         'о' => 'o',  'п' => 'p',  'р' => 'r',  'с' => 's',    'т' => 't',
-        'у' => 'u',  'ў' => 'u',  'ф' => 'f',  'х' => 'kh',   'ц' => 'c',
+        'у' => 'u',  'ў' => 'u',  'ф' => 'f',  'х' => 'kh',   'ц' => 'ts',
         'ч' => 'ch', 'џ' => 'dh', 'ш' => 'sh', 'щ' => 'shch', 'ъ' => '',
         'ы' => 'y',  'ь' => '',   'э' => 'e',  'ю' => 'yu',   'я' => 'ya'
     ];
@@ -56,6 +72,11 @@ class CyrToLat
 
         register_setting('wwc2r', self::OPTIONS_KEY, ['default' => $defaults]);
 
+        $this->setUpHooks();
+    }
+
+    public function setUpHooks()
+    {
         $options = (array)get_option(self::OPTIONS_KEY);
         $posts   = $options['posts'] ?? 0;
         $terms   = $options['terms'] ?? 0;
@@ -77,10 +98,22 @@ class CyrToLat
         }
     }
 
+    public function reinstallHooks()
+    {
+        remove_filter('get_sample_permalink',      [$this, 'get_sample_permalink']);
+        remove_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 10);
+        remove_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'], 10);
+        remove_filter('wp_update_term_data',       [$this, 'wp_update_term_data'], 10);
+        remove_filter('wp_insert_term_data',       [$this, 'wp_insert_term_data'], 10);
+        remove_filter('sanitize_file_name',        [$this, 'sanitize_file_name']);
+
+        $this->setUpHooks();
+    }
+
     private function getTable() : array
     {
         $locale = get_locale();
-        $parts  = explode($locale, '_', 2);
+        $parts  = explode('_', $locale, 2);
         $lang   = $parts[0];
         $table  = self::$table;
 
@@ -88,7 +121,7 @@ class CyrToLat
             case 'bg':
                 $table['Г'] = 'G';   $table['г'] = 'g';
                 $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Й'] = 'J';   $table['й'] = 'j';
+                $table['Ц'] = 'C';   $table['ц'] = 'c';
                 $table['Щ'] = 'STH'; $table['щ'] = 'sth';
                 $table['Ъ'] = 'A';   $table['ъ'] = 'a';
                 break;
@@ -96,26 +129,45 @@ class CyrToLat
             case 'mk':
                 $table['Г'] = 'G';   $table['г'] = 'g';
                 $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Й'] = 'J';   $table['й'] = 'j';
+                $table['Ц'] = 'C';   $table['ц'] = 'c';
                 break;
 
             case 'ru':
                 $table['Г'] = 'G';   $table['г'] = 'g';
                 $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Й'] = 'J';   $table['й'] = 'j';
+                $table['Ц'] = 'C';   $table['ц'] = 'c';
                 $table['Щ'] = 'SHH'; $table['щ'] = 'shh';
                 break;
 
             case 'be':
-                $table['Й'] = 'J';   $table['й'] = 'j';
+                $table['Ц'] = 'C';   $table['ц'] = 'c';
                 break;
         }
 
         return apply_filters('wwcyrtolat_xlat_table', $table);
     }
 
+    private function getReTable() : array
+    {
+        $locale = get_locale();
+        $parts  = explode('_', $locale, 2);
+        $lang   = $parts[0];
+
+        switch ($lang) {
+            case 'uk': $table = self::$retable; break;
+            default:   $table = []; break;
+        }
+
+        return apply_filters('wwcyrtolat_xlat_re_table', $table);
+    }
+
     private function transliterate($value, $what)
     {
+        $retbl = $this->getReTable();
+        if ($retbl) {
+            $value = preg_replace(array_keys($retbl), array_values($retbl), $value);
+        }
+
         $table = $this->getTable();
         $value = strtr($value, $table);
         $value = iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $value);
