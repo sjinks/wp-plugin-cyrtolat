@@ -83,29 +83,29 @@ class CyrToLat
         $files   = $options['files'] ?? 0;
 
         if ($posts) {
-            add_filter('get_sample_permalink',      [$this, 'get_sample_permalink']);
-            add_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 10, 2);
-            add_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'], 10, 2);
+            add_filter('get_sample_permalink',      [$this, 'get_sample_permalink'],      50);
+            add_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 50, 2);
+            add_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'],       50, 2);
         }
 
         if ($terms) {
-            add_filter('wp_update_term_data', [$this, 'wp_update_term_data'], 10, 4);
-            add_filter('wp_insert_term_data', [$this, 'wp_insert_term_data'], 10, 3);
+            add_filter('wp_update_term_data', [$this, 'wp_update_term_data'], 50, 4);
+            add_filter('wp_insert_term_data', [$this, 'wp_insert_term_data'], 50, 3);
         }
 
         if ($files) {
-            add_filter('sanitize_file_name',  [$this, 'sanitize_file_name']);
+            add_filter('sanitize_file_name',  [$this, 'sanitize_file_name'],  50);
         }
     }
 
     public function reinstallHooks()
     {
-        remove_filter('get_sample_permalink',      [$this, 'get_sample_permalink']);
-        remove_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 10);
-        remove_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'], 10);
-        remove_filter('wp_update_term_data',       [$this, 'wp_update_term_data'], 10);
-        remove_filter('wp_insert_term_data',       [$this, 'wp_insert_term_data'], 10);
-        remove_filter('sanitize_file_name',        [$this, 'sanitize_file_name']);
+        remove_filter('get_sample_permalink',      [$this, 'get_sample_permalink'],      50);
+        remove_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 50);
+        remove_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'],       50);
+        remove_filter('wp_update_term_data',       [$this, 'wp_update_term_data'],       50);
+        remove_filter('wp_insert_term_data',       [$this, 'wp_insert_term_data'],       50);
+        remove_filter('sanitize_file_name',        [$this, 'sanitize_file_name'],        50);
 
         $this->setUpHooks();
     }
