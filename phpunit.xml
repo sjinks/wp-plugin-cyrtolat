@@ -1,4 +1,6 @@
 <phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
 	bootstrap="tests/bootstrap.php"
 	backupGlobals="false"
 	colors="true"
@@ -8,7 +10,7 @@
 	>
 	<testsuites>
 		<testsuite>
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+			<directory suffix="Test.php">./tests/</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>
