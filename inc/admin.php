@@ -30,7 +30,7 @@ class CyrToLatAdmin
 
     public function init()
     {
-        load_plugin_textdomain('wwc2r', false, dirname(substr(__DIR__, strlen(\WP_PLUGIN_DIR) + 1)) . '/lang/');
+        load_plugin_textdomain('wwc24', /** @scrutinizer ignore-type */ false, plugin_basename(dirname(dirname(__FILE__))) . '/lang/');
 
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_init', [$this, 'admin_init']);

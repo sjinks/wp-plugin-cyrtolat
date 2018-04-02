@@ -164,7 +164,7 @@ class CyrToLat
     private function transliterate($value, $what)
     {
         $retbl = $this->getReTable();
-        if ($retbl) {
+        if (!empty($retbl)) {
             $value = preg_replace(array_keys($retbl), array_values($retbl), $value);
         }
 
