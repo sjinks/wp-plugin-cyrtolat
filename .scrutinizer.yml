@@ -23,18 +23,3 @@ filter:
         - 'tests/*'
     dependency_paths:
         - wordpress/
-
-checks:
-    php:
-        phpunit_assertions: true
-        return_doc_comment_if_not_inferrable: true
-        return_doc_comments: true
-        simplify_boolean_return: true
-        parameter_doc_comments: true
-        no_goto: true
-        fix_line_ending: true
-        check_method_contracts:
-            verify_interface_like_constraints: true
-            verify_documented_constraints: true
-            verify_parent_constraints: true
-        param_doc_comment_if_not_inferrable: true
