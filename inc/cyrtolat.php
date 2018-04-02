@@ -2,7 +2,7 @@
 
 namespace WildWold\WordPress;
 
-class CyrToLat
+final class CyrToLat
 {
     /**
      * @var string
@@ -48,6 +48,9 @@ class CyrToLat
         'ы' => 'y',  'ь' => '',   'э' => 'e',  'ю' => 'yu',   'я' => 'ya'
     ];
 
+    /**
+     * @return CyrToLat
+     */
     public static function instance()
     {
         if (!self::$self) {
@@ -161,6 +164,9 @@ class CyrToLat
         return apply_filters('wwcyrtolat_xlat_re_table', $table);
     }
 
+    /**
+     * @return string
+     */
     private function transliterate($value, $what)
     {
         $retbl = $this->getReTable();
@@ -205,6 +211,9 @@ class CyrToLat
         return $this->wp_insert_term_data($data, $taxonomy, $args);
     }
 
+    /**
+     * @return string
+     */
     public function sanitize_file_name($name)
     {
         return $this->transliterate($name, 'file_name');

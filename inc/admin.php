@@ -2,7 +2,7 @@
 
 namespace WildWold\WordPress;
 
-class CyrToLatAdmin
+final class CyrToLatAdmin
 {
     /**
      * @var CyrToLatAdmin|null
