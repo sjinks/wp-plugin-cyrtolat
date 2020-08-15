@@ -1,6 +1,6 @@
 # wp-plugin-cyrtolat
 
-[![Build Status](https://travis-ci.org/sjinks/wp-plugin-cyrtolat.svg?branch=master)](https://travis-ci.org/sjinks/wp-plugin-cyrtolat)
+![Build CI](https://github.com/sjinks/wp-plugin-cyrtolat/workflows/Build%20CI/badge.svg)
 
 WordPress plugin to transliterate cyrillic slugs into latin.
 
