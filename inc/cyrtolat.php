@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace WildWold\WordPress;
 
@@ -51,7 +52,7 @@ final class CyrToLat
     /**
      * @return CyrToLat
      */
-    public static function instance()
+    public static function instance(): self
     {
         if (!self::$self) {
             self::$self = new self();
@@ -62,10 +63,10 @@ final class CyrToLat
 
     private function __construct()
     {
-        add_action('init', [$this, 'init']);
+        \add_action('init', [$this, 'init']);
     }
 
-    public function init()
+    public function init(): void
     {
         static $defaults = [
             'posts' => 0,
@@ -73,50 +74,50 @@ final class CyrToLat
             'files' => 0
         ];
 
-        register_setting('wwc2r', self::OPTIONS_KEY, ['default' => $defaults]);
+        \register_setting('wwc2r', self::OPTIONS_KEY, ['default' => $defaults]);
 
         $this->setUpHooks();
     }
 
-    public function setUpHooks()
+    public function setUpHooks(): void
     {
-        $options = (array)get_option(self::OPTIONS_KEY);
+        $options = (array)\get_option(self::OPTIONS_KEY);
         $posts   = $options['posts'] ?? 0;
         $terms   = $options['terms'] ?? 0;
         $files   = $options['files'] ?? 0;
 
         if ($posts) {
-            add_filter('get_sample_permalink',      [$this, 'get_sample_permalink'],      50);
-            add_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 50, 2);
-            add_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'],       50, 2);
+            \add_filter('get_sample_permalink',      [$this, 'get_sample_permalink'],      50);
+            \add_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 50, 2);
+            \add_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'],       50, 2);
         }
 
         if ($terms) {
-            add_filter('wp_update_term_data', [$this, 'wp_update_term_data'], 50, 4);
-            add_filter('wp_insert_term_data', [$this, 'wp_insert_term_data'], 50, 3);
+            \add_filter('wp_update_term_data',       [$this, 'wp_update_term_data'],       50, 4);
+            \add_filter('wp_insert_term_data',       [$this, 'wp_insert_term_data'],       50, 3);
         }
 
         if ($files) {
-            add_filter('sanitize_file_name',  [$this, 'sanitize_file_name'],  50);
+            \add_filter('sanitize_file_name',        [$this, 'sanitize_file_name'],        50);
         }
     }
 
-    public function reinstallHooks()
+    public function reinstallHooks(): void
     {
-        remove_filter('get_sample_permalink',      [$this, 'get_sample_permalink'],      50);
-        remove_filter('wp_insert_attachment_data', [$this, 'wp_insert_attachment_data'], 50);
-        remove_filter('wp_insert_post_data',       [$this, 'wp_insert_post_data'],       50);
-        remove_filter('wp_update_term_data',       [$this, 'wp_update_term_data'],       50);
-        remove_filter('wp_insert_term_data',       [$this, 'wp_insert_term_data'],       50);
-        remove_filter('sanitize_file_name',        [$this, 'sanitize_file_name'],        50);
+        \remove_filter('get_sample_permalink',       [$this, 'get_sample_permalink'],      50);
+        \remove_filter('wp_insert_attachment_data',  [$this, 'wp_insert_attachment_data'], 50);
+        \remove_filter('wp_insert_post_data',        [$this, 'wp_insert_post_data'],       50);
+        \remove_filter('wp_update_term_data',        [$this, 'wp_update_term_data'],       50);
+        \remove_filter('wp_insert_term_data',        [$this, 'wp_insert_term_data'],       50);
+        \remove_filter('sanitize_file_name',         [$this, 'sanitize_file_name'],        50);
 
         $this->setUpHooks();
     }
 
-    private function getTable() : array
+    private function getTable(): array
     {
-        $locale = get_locale();
-        $parts  = explode('_', $locale, 2);
+        $locale = \get_locale();
+        $parts  = \explode('_', $locale, 2);
         $lang   = $parts[0];
         $table  = self::$table;
 
@@ -147,13 +148,13 @@ final class CyrToLat
                 break;
         }
 
-        return apply_filters('wwcyrtolat_xlat_table', $table);
+        return \apply_filters('wwcyrtolat_xlat_table', $table);
     }
 
     private function getReTable() : array
     {
-        $locale = get_locale();
-        $parts  = explode('_', $locale, 2);
+        $locale = \get_locale();
+        $parts  = \explode('_', $locale, 2);
         $lang   = $parts[0];
 
         switch ($lang) {
@@ -161,60 +162,54 @@ final class CyrToLat
             default:   $table = []; break;
         }
 
-        return apply_filters('wwcyrtolat_xlat_re_table', $table);
+        return \apply_filters('wwcyrtolat_xlat_re_table', $table);
     }
 
-    /**
-     * @return string
-     */
-    private function transliterate($value, $what)
+    private function transliterate(string $value, string $what): string
     {
         $retbl = $this->getReTable();
         if (!empty($retbl)) {
-            $value = preg_replace(array_keys($retbl), array_values($retbl), $value);
+            $value = \preg_replace(\array_keys($retbl), \array_values($retbl), $value);
         }
 
         $table = $this->getTable();
-        $value = strtr($value, $table);
-        $value = iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $value);
-        $value = preg_replace('/[^A-Za-z0-9_.-]/', '-', $value);
-        $value = trim(preg_replace('/-{2,}/', '-', $value), '-');
-        return apply_filters('transliterate_name', $value, $what);
+        $value = \strtr($value, $table);
+        $value = \iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $value);
+        $value = \preg_replace('/[^A-Za-z0-9_.-]/', '-', $value);
+        $value = \trim(\preg_replace('/-{2,}/', '-', $value), '-');
+        return \apply_filters('transliterate_name', $value, $what);
     }
 
-    public function get_sample_permalink($name)
+    public function get_sample_permalink(array $name): array
     {
         $name[1] = $this->transliterate($name[1], 'post_name');
         return $name;
     }
 
-    public function wp_insert_post_data($data, $args)
+    public function wp_insert_post_data(array $data, array $args): array
     {
-        $name = $this->transliterate(urldecode($data['post_name']), 'post_name');
-        $data['post_name'] = wp_unique_post_slug($name, $args['ID'] ?? 0, $data['post_status'], $data['post_type'], $data['post_parent']);
+        $name = $this->transliterate(\urldecode($data['post_name']), 'post_name');
+        $data['post_name'] = \wp_unique_post_slug($name, $args['ID'] ?? 0, $data['post_status'], $data['post_type'], $data['post_parent']);
         return $data;
     }
 
-    public function wp_insert_attachment_data($data, $args)
+    public function wp_insert_attachment_data(array $data, array $args): array
     {
         return $this->wp_insert_post_data($data, $args);
     }
 
-    public function wp_insert_term_data($data, $taxonomy, $args)
+    public function wp_insert_term_data(array $data, $taxonomy, array $args): array
     {
-        $data['slug'] = wp_unique_term_slug($this->transliterate(urldecode($data['slug']), 'term'), (object)$args);
+        $data['slug'] = \wp_unique_term_slug($this->transliterate(\urldecode($data['slug']), 'term'), (object)$args);
         return $data;
     }
 
-    public function wp_update_term_data($data, $id, $taxonomy, $args)
+    public function wp_update_term_data(array $data, $id, $taxonomy, array $args): array
     {
         return $this->wp_insert_term_data($data, $taxonomy, $args);
     }
 
-    /**
-     * @return string
-     */
-    public function sanitize_file_name($name)
+    public function sanitize_file_name(string $name): string
     {
         return $this->transliterate($name, 'file_name');
     }
