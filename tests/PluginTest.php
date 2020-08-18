@@ -1,6 +1,6 @@
 <?php
 
-use WildWold\WordPress\CyrToLat;
+use WildWolf\WordPress\CyrToLat;
 
 class PluginTest extends WP_UnitTestCase
 {

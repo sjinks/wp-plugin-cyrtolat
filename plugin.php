@@ -6,8 +6,8 @@ Author: Volodymyr Kolesnykov <volodymyr@wildwolf.name>
 Version: 1.0.0
 */
 
-use WildWold\WordPress\CyrToLat;
-use WildWold\WordPress\CyrToLatAdmin;
+use WildWolf\WordPress\CyrToLat;
+use WildWolf\WordPress\CyrToLatAdmin;
 
 defined('ABSPATH') || die();
 

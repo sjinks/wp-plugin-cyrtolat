@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WildWold\WordPress;
+namespace WildWolf\WordPress;
 
 final class CyrToLat
 {
