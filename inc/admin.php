@@ -31,7 +31,7 @@ final class CyrToLatAdmin
 
     public function init(): void
     {
-        \load_plugin_textdomain('wwc24', /** @scrutinizer ignore-type */ false, \plugin_basename(dirname(__DIR__)) . '/lang/');
+        \load_plugin_textdomain('wwc2r', /** @scrutinizer ignore-type */ false, \plugin_basename(dirname(__DIR__)) . '/lang/');
 
         \add_action('admin_menu', [$this, 'admin_menu']);
         \add_action('admin_init', [$this, 'admin_init']);
