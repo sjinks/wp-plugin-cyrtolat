@@ -134,36 +134,39 @@ final class CyrToLat
         $locale = \get_locale();
         $parts  = \explode('_', $locale, 2);
         $lang   = $parts[0];
-        $table  = self::$table;
+        $tbl    = self::$table;
 
         switch ($lang) {
             case 'bg':
-                $table['Г'] = 'G';   $table['г'] = 'g';
-                $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Ц'] = 'C';   $table['ц'] = 'c';
-                $table['Щ'] = 'STH'; $table['щ'] = 'sth';
-                $table['Ъ'] = 'A';   $table['ъ'] = 'a';
+                $tbl['Г'] = 'G';   $tbl['г'] = 'g';
+                $tbl['И'] = 'I';   $tbl['и'] = 'i';
+                $tbl['Ц'] = 'C';   $tbl['ц'] = 'c';
+                $tbl['Щ'] = 'STH'; $tbl['щ'] = 'sth';
+                $tbl['Ъ'] = 'A';   $tbl['ъ'] = 'a';
                 break;
 
             case 'mk':
-                $table['Г'] = 'G';   $table['г'] = 'g';
-                $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Ц'] = 'C';   $table['ц'] = 'c';
+                $tbl['Г'] = 'G';   $tbl['г'] = 'g';
+                $tbl['И'] = 'I';   $tbl['и'] = 'i';
+                $tbl['Ц'] = 'C';   $tbl['ц'] = 'c';
                 break;
 
             case 'ru':
-                $table['Г'] = 'G';   $table['г'] = 'g';
-                $table['И'] = 'I';   $table['и'] = 'i';
-                $table['Ц'] = 'C';   $table['ц'] = 'c';
-                $table['Щ'] = 'SHH'; $table['щ'] = 'shh';
+                $tbl['Г'] = 'G';   $tbl['г'] = 'g';
+                $tbl['И'] = 'I';   $tbl['и'] = 'i';
+                $tbl['Ц'] = 'C';   $tbl['ц'] = 'c';
+                $tbl['Щ'] = 'SHH'; $tbl['щ'] = 'shh';
                 break;
 
             case 'be':
-                $table['Ц'] = 'C';   $table['ц'] = 'c';
+                $tbl['Ц'] = 'C';   $tbl['ц'] = 'c';
+                break;
+
+            default:
                 break;
         }
 
-        return \apply_filters('wwcyrtolat_xlat_table', $table);
+        return \apply_filters('wwcyrtolat_xlat_table', $tbl);
     }
 
     /**
@@ -175,12 +178,8 @@ final class CyrToLat
         $parts  = \explode('_', $locale, 2);
         $lang   = $parts[0];
 
-        switch ($lang) {
-            case 'uk': $table = self::$retable; break;
-            default:   $table = []; break;
-        }
-
-        return \apply_filters('wwcyrtolat_xlat_re_table', $table);
+        $tbl = ($lang === 'uk') ? self::$retable : [];
+        return \apply_filters('wwcyrtolat_xlat_re_table', $tbl);
     }
 
     private function transliterate(string $value, string $what): string
