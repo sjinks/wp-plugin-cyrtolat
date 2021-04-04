@@ -10,8 +10,14 @@ final class CyrToLat
      */
     const OPTIONS_KEY = 'wwc2r';
 
+    /**
+     * @var self|null
+     */
     private static $self = null;
 
+    /**
+     * @var array<string,string>
+     */
     private static $retable = [
         '/зг/u'   => 'zgh',
         '/Зг/u'   => 'Zgh',
@@ -27,6 +33,9 @@ final class CyrToLat
         '/\\Bя/u' => 'ia',
     ];
 
+    /**
+     * @var array<string,string>
+     */
     private static $table = [
         'А' => 'A',  'Б' => 'B',  'В' => 'V',  'Г' => 'H',    'Ѓ' => 'G',
         'Ґ' => 'G',  'Д' => 'D',  'Е' => 'E',  'Ё' => 'YO',   'Є' => 'YE',
@@ -82,8 +91,11 @@ final class CyrToLat
     public function setUpHooks(): void
     {
         $options = (array)\get_option(self::OPTIONS_KEY);
+        /** @var int */
         $posts   = $options['posts'] ?? 0;
+        /** @var int */
         $terms   = $options['terms'] ?? 0;
+        /** @var int */
         $files   = $options['files'] ?? 0;
 
         if ($posts) {
@@ -114,6 +126,9 @@ final class CyrToLat
         $this->setUpHooks();
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function getTable(): array
     {
         $locale = \get_locale();
@@ -151,7 +166,10 @@ final class CyrToLat
         return \apply_filters('wwcyrtolat_xlat_table', $table);
     }
 
-    private function getReTable() : array
+    /**
+     * @return array<string,string>
+     */
+    private function getReTable(): array
     {
         $locale = \get_locale();
         $parts  = \explode('_', $locale, 2);
@@ -172,39 +190,74 @@ final class CyrToLat
             $value = \preg_replace(\array_keys($retbl), \array_values($retbl), $value);
         }
 
-        $table = $this->getTable();
-        $value = \strtr($value, $table);
-        $value = \iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $value);
+        $tbl   = $this->getTable();
+        $value = \strtr($value, $tbl);
+        $value = (string)\iconv('UTF-8', 'UTF-8//TRANSLIT//IGNORE', $value);
         $value = \preg_replace('/[^A-Za-z0-9_.-]/', '-', $value);
         $value = \trim(\preg_replace('/-{2,}/', '-', $value), '-');
         return \apply_filters('transliterate_name', $value, $what);
     }
 
+    /**
+     * @param array $name
+     * @return array
+     * @psalm-param array<array-key,mixed> $name
+     * @psalm-return array<array-key,mixed>
+     * @psalm-suppress InvalidReturnStatement, InvalidReturnType
+     */
     public function get_sample_permalink(array $name): array
     {
+        /** @psalm-var array{0: string, 1: string} $name */
         $name[1] = $this->transliterate($name[1], 'post_name');
         return $name;
     }
 
+    /**
+     * @param array<array-key,mixed> $data
+     * @param array<array-key,mixed> $args
+     * @return array<array-key,mixed>
+     */
     public function wp_insert_post_data(array $data, array $args): array
     {
+        /**
+         * @var array{post_name: string, post_status: string, post_type: string, post_parent: positive-int} $data
+         * @var array{ID: positive-int|null} $args
+         */
         $name = $this->transliterate(\urldecode($data['post_name']), 'post_name');
         $data['post_name'] = \wp_unique_post_slug($name, $args['ID'] ?? 0, $data['post_status'], $data['post_type'], $data['post_parent']);
         return $data;
     }
 
+    /*
+     * @psalm-param array{post_name: string, post_status: string, post_type: string, post_parent: positive-int} $data
+     * @psalm-param array{ID: positive-int|null} $args
+     */
     public function wp_insert_attachment_data(array $data, array $args): array
     {
         return $this->wp_insert_post_data($data, $args);
     }
 
-    public function wp_insert_term_data(array $data, $taxonomy, array $args): array
+    /**
+     * @param array<array-key,mixed> $data
+     * @param string $taxonomy
+     * @param array $args
+     * @return array<array-key,mixed>
+     */
+    public function wp_insert_term_data($data, $taxonomy, $args): array
     {
+        /** @var string $data['slug'] */
         $data['slug'] = \wp_unique_term_slug($this->transliterate(\urldecode($data['slug']), 'term'), (object)$args);
         return $data;
     }
 
-    public function wp_update_term_data(array $data, $id, $taxonomy, array $args): array
+    /**
+     * @param array<array-key,mixed> $data
+     * @param int $id
+     * @param string $taxonomy
+     * @param array $args
+     * @return array<array-key,mixed>
+     */
+    public function wp_update_term_data($data, $id, $taxonomy, $args): array
     {
         return $this->wp_insert_term_data($data, $taxonomy, $args);
     }
@@ -213,7 +266,4 @@ final class CyrToLat
     {
         return $this->transliterate($name, 'file_name');
     }
-
-    private function __clone()  {}
-    private function __wakeup() {}
 }
