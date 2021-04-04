@@ -6,7 +6,7 @@ namespace WildWolf\WordPress;
 final class CyrToLatAdmin
 {
     /**
-     * @var CyrToLatAdmin|null
+     * @var self|null
      */
     private static $self = null;
 
@@ -50,8 +50,12 @@ final class CyrToLatAdmin
         \add_settings_field('files', \__('Transliterate file names',        'wwc2r'), [$this, 'checkbox_field'], 'wwc2r', 'wwc2r_section_main', ['label_for' => 'files']);
     }
 
+    /**
+     * @param array<string,string> $args
+     */
     public function checkbox_field(array $args): void
     {
+        /** @var array<string,string> */
         $options = \get_option(self::OPTIONS_KEY);
         $name    = \esc_attr(self::OPTIONS_KEY);
         $id      = \esc_attr($args['label_for']);
@@ -67,7 +71,4 @@ EOT;
             require __DIR__ . '/../views/settings.php';
         }
     }
-
-    private function __clone()  {}
-    private function __wakeup() {}
 }
