@@ -17,7 +17,7 @@ final class CyrToLatAdmin
 
     public static function instance(): self
     {
-        if (!self::$self) {
+        if (self::$self === null) {
             self::$self = new self();
         }
 

@@ -21,7 +21,11 @@
 		"phpunit/phpunit": "^7",
 		"vimeo/psalm": "^4.7",
 		"humanmade/psalm-plugin-wordpress": "^2.0",
-		"johnpbloch/wordpress": "^5.7"
+		"johnpbloch/wordpress": "^5.7",
+		"phpstan/phpstan": "^0.12.83",
+		"phpstan/extension-installer": "^1.1",
+		"szepeviktor/phpstan-wordpress": "^0.7.5",
+		"phpstan/phpstan-strict-rules": "^0.12.9"
 	},
 	"scripts": {
 		"test": "phpunit"
