@@ -78,7 +78,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=5s --health-retries=5
     steps:
       - name: Download the source code
         uses: actions/download-artifact@v2
@@ -95,7 +95,7 @@ jobs:
 
       - name: Verify MariaDB connection
         run: |
-          while ! mysqladmin ping -h 127.0.0.1 -P ${{ job.services.mysql.ports[3306] }}; do
+          while ! mysqladmin ping -h 127.0.0.1 -P ${{ job.services.mysql.ports[3306] }} --silent; do
             sleep 1
           done
         timeout-minutes: 3
@@ -105,8 +105,5 @@ jobs:
 
       - name: Run tests
         run: vendor/bin/phpunit
-      
-      - name: Run tests in multi-site mode
-        run: phpunit
         env:
           WP_MULTISITE: ${{ matrix.wpmu }}
