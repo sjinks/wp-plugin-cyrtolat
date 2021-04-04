@@ -44,7 +44,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Archive the source
-        run: touch plugin-${{ matrix.php }}.tgz && tar czf plugin-${{ matrix.php }}.tgz --exclude=./wordpress/ --exclude=./node_modules/ --exclude=.git/ --exclude="*.tgz" ./
+        run: touch plugin-${{ matrix.php }}.tgz && tar czf plugin-${{ matrix.php }}.tgz --exclude=./wordpress/ --exclude=.git/ --exclude="*.tgz" ./
 
       - name: Upload the source
         uses: actions/upload-artifact@v2
