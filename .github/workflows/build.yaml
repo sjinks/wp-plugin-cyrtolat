@@ -42,7 +42,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
+        run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-reqs
 
       - name: Archive the source
         run: touch plugin-${{ matrix.php }}.tgz && tar czf plugin-${{ matrix.php }}.tgz --exclude=./wordpress/ --exclude=.git/ --exclude="*.tgz" ./
