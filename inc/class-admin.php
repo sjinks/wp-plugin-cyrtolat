@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WildWolf\WordPress\CyrToLat;
 
 final class Admin {
-
 	/** @var self|null */
 	private static $instance = null;
 

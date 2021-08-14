@@ -2,9 +2,6 @@
 
 use WildWolf\WordPress\CyrToLat\Plugin;
 
-/**
- * @property WP_UnitTest_Factory $factory
- */
 class Test_Plugin extends WP_UnitTestCase {
 
 	public function testDefaults(): void {

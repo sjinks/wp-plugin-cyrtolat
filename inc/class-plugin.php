@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace WildWolf\WordPress\CyrToLat;
 
 final class Plugin {
-
 	const OPTIONS_KEY = 'wwc2r';
 
 	/** @var self|null */
@@ -258,8 +257,8 @@ final class Plugin {
 		$value = preg_replace( '/[^A-Za-z0-9_.-]/', '-', $value );
 		/** @var string */
 		$value = preg_replace( '/-{2,}/', '-', $value );
-		$value = \trim( $value, '-' );
-		/** @phpstan-ignore-next-line */
+		$value = trim( $value, '-' );
+
 		return apply_filters( 'transliterate_name', $value, $what );
 	}
 
@@ -268,7 +267,6 @@ final class Plugin {
 	 * @return array
 	 * @psalm-param array<array-key,mixed> $name
 	 * @psalm-return array<array-key,mixed>
-	 * @psalm-suppress InvalidReturnStatement, InvalidReturnType
 	 */
 	public function get_sample_permalink( array $name ): array {
 		/** @psalm-var array{0: string, 1: string} $name */
@@ -283,8 +281,8 @@ final class Plugin {
 	 */
 	public function wp_insert_post_data( array $data, array $args ): array {
 		/**
-		 * @var array{post_name: string, post_status: string, post_type: string, post_parent: positive-int} $data
-		 * @var array{ID: positive-int|null} $args
+		 * @psalm-var array{post_name: string, post_status: string, post_type: string, post_parent: positive-int} $data
+		 * @psalm-var array{ID: positive-int|null} $args
 		 */
 		$name              = $this->transliterate( urldecode( $data['post_name'] ), 'post_name' );
 		$data['post_name'] = wp_unique_post_slug( $name, $args['ID'] ?? 0, $data['post_status'], $data['post_type'], $data['post_parent'] );
@@ -298,8 +296,8 @@ final class Plugin {
 	 */
 	public function wp_insert_attachment_data( array $data, array $args ): array {
 		/**
-		 * @var array{'post_name': string, 'post_status': string, 'post_type': string, 'post_parent': positive-int, 'slug': string} $data
-		 * @var array{'ID'?: positive-int} $args
+		 * @psalm-var array{'post_name': string, 'post_status': string, 'post_type': string, 'post_parent': positive-int, 'slug': string} $data
+		 * @psalm-var array{'ID'?: positive-int} $args
 		 */
 		return $this->wp_insert_post_data( $data, $args );
 	}
@@ -312,7 +310,7 @@ final class Plugin {
 	 */
 	public function wp_insert_term_data( $data, $taxonomy, $args ): array {
 		/** @psalm-var array{'slug': string} $data */
-		$data['slug'] = wp_unique_term_slug( $this->transliterate( \urldecode( $data['slug'] ), 'term' ), (object) $args );
+		$data['slug'] = wp_unique_term_slug( $this->transliterate( urldecode( $data['slug'] ), 'term' ), (object) $args );
 		return $data;
 	}
 

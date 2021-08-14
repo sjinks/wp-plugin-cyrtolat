@@ -5,3 +5,9 @@ parameters:
         - inc
     treatPhpDocTypesAsCertain: false
     tipsOfTheDay: false
+    phpVersion: 70300
+    ignoreErrors:
+        - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon

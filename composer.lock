@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7410d7b7c615429bbdc04f5cb2e08ab6",
+    "content-hash": "6e53006a682eda5f33195254c098534d",
     "packages": [
         {
             "name": "composer/installers",
@@ -1749,51 +1749,6 @@
                 "source": "https://github.com/phpspec/prophecy/tree/1.13.0"
             },
             "time": "2021-03-17T13:42:18+00:00"
-        },
-        {
-            "name": "phpstan/extension-installer",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/extension-installer.git",
-                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
-                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1 || ^2.0",
-                "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": ">=0.11.6"
-            },
-            "require-dev": {
-                "composer/composer": "^1.8",
-                "phing/phing": "^2.16.3",
-                "php-parallel-lint/php-parallel-lint": "^1.2.0",
-                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "PHPStan\\ExtensionInstaller\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "PHPStan\\ExtensionInstaller\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Composer plugin for automatic installation of PHPStan extensions",
-            "support": {
-                "issues": "https://github.com/phpstan/extension-installer/issues",
-                "source": "https://github.com/phpstan/extension-installer/tree/1.1.0"
-            },
-            "time": "2020-12-13T13:06:13+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -4309,16 +4264,16 @@
         },
         {
             "name": "wildwolf/wordpress-test-library-stubs",
-            "version": "5.8.0",
+            "version": "5.8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sjinks/wordpress-test-library-stubs.git",
-                "reference": "d6b0f311780491942ac475617228aa42c433c142"
+                "reference": "ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sjinks/wordpress-test-library-stubs/zipball/d6b0f311780491942ac475617228aa42c433c142",
-                "reference": "d6b0f311780491942ac475617228aa42c433c142",
+                "url": "https://api.github.com/repos/sjinks/wordpress-test-library-stubs/zipball/ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7",
+                "reference": "ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7",
                 "shasum": ""
             },
             "require-dev": {
@@ -4339,9 +4294,9 @@
             "description": "Stubs for WordPress test library",
             "support": {
                 "issues": "https://github.com/sjinks/wordpress-test-library-stubs/issues",
-                "source": "https://github.com/sjinks/wordpress-test-library-stubs/tree/5.8.0"
+                "source": "https://github.com/sjinks/wordpress-test-library-stubs/tree/5.8.0.1"
             },
-            "time": "2021-08-14T07:26:50+00:00"
+            "time": "2021-08-14T14:39:12+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
