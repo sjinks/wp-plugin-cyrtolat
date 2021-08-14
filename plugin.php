@@ -3,19 +3,18 @@
 Plugin Name: WW CyrToLat
 Description: Transliterates cyrillic characters in post names to latin ones.
 Author: Volodymyr Kolesnykov <volodymyr@wildwolf.name>
-Version: 2.1.0
+Version: 3.0.0
 */
 
-use WildWolf\WordPress\CyrToLat;
-use WildWolf\WordPress\CyrToLatAdmin;
+use WildWolf\WordPress\CyrToLat\Admin;
+use WildWolf\WordPress\CyrToLat\Plugin;
 
-/** @phpstan-ignore-next-line */
-defined('ABSPATH') || die();
+if ( defined( 'ABSPATH' ) ) {
+	require_once __DIR__ . '/inc/class-plugin.php';
+	Plugin::instance();
 
-require_once __DIR__ . '/inc/cyrtolat.php';
-CyrToLat::instance();
-
-if (is_admin()) {
-    require_once __DIR__ . '/inc/admin.php';
-    CyrToLatAdmin::instance();
+	if ( is_admin() ) {
+		require_once __DIR__ . '/inc/class-admin.php';
+		Admin::instance();
+	}
 }
