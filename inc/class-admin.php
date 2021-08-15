@@ -22,7 +22,7 @@ final class Admin {
 	}
 
 	public function init(): void {
-		load_plugin_textdomain( 'wwc2r', '', plugin_basename( dirname( __DIR__ ) ) . '/lang/' ); // phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
+		load_plugin_textdomain( 'wwc2r', false, plugin_basename( dirname( __DIR__ ) ) . '/lang/' ); // phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
 
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
