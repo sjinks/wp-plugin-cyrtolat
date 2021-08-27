@@ -9,12 +9,21 @@ Version: 3.0.0
 use WildWolf\WordPress\CyrToLat\Admin;
 use WildWolf\WordPress\CyrToLat\Plugin;
 
+// @codeCoverageIgnoreStart
 if ( defined( 'ABSPATH' ) ) {
-	require_once __DIR__ . '/inc/class-plugin.php';
-	Plugin::instance();
+	if ( defined( 'VENDOR_PATH' ) ) {
+		/** @psalm-suppress UnresolvableInclude, MixedOperand */
+		require constant( 'VENDOR_PATH' ) . '/vendor/autoload.php'; // NOSONAR
+	} elseif ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		require __DIR__ . '/vendor/autoload.php';
+	} elseif ( file_exists( ABSPATH . 'vendor/autoload.php' ) ) {
+		/** @psalm-suppress UnresolvableInclude */
+		require ABSPATH . 'vendor/autoload.php';
+	}
 
+	Plugin::instance();
 	if ( is_admin() ) {
-		require_once __DIR__ . '/inc/class-admin.php';
 		Admin::instance();
 	}
 }
+// @codeCoverageIgnoreEnd

@@ -1,3 +1,7 @@
 <?php
-defined( 'WP_UNINSTALL_PLUGIN' ) || die();
-delete_option( 'wwc2r' );
+
+// @codeCoverageIgnoreStart
+if ( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	delete_option( 'wwc2r' );
+}
+// @codeCoverageIgnoreEnd

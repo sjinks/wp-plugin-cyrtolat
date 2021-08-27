@@ -3,19 +3,12 @@ declare(strict_types=1);
 
 namespace WildWolf\WordPress\CyrToLat;
 
+use WildWolf\Utils\Singleton;
+
 final class Admin {
-	/** @var self|null */
-	private static $instance = null;
+	use Singleton;
 
 	const OPTIONS_KEY = Plugin::OPTIONS_KEY;
-
-	public static function instance(): self {
-		if ( null === self::$instance ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
 
 	private function __construct() {
 		add_action( 'init', [ $this, 'init' ] );

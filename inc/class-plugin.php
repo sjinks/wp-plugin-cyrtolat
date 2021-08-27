@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace WildWolf\WordPress\CyrToLat;
 
-final class Plugin {
-	const OPTIONS_KEY = 'wwc2r';
+use WildWolf\Utils\Singleton;
 
-	/** @var self|null */
-	private static $self = null;
+final class Plugin {
+	use Singleton;
+
+	const OPTIONS_KEY = 'wwc2r';
 
 	/** @var array<string,string> */
 	private static $retable = [
@@ -119,14 +120,6 @@ final class Plugin {
 		'ю' => 'yu',
 		'я' => 'ya',
 	];
-
-	public static function instance(): self {
-		if ( null === self::$self ) {
-			self::$self = new self();
-		}
-
-		return self::$self;
-	}
 
 	private function __construct() {
 		add_action( 'init', [ $this, 'init' ] );

@@ -15,7 +15,8 @@
 	],
 	"require": {
 		"php": "^7.3 || ^8.0",
-		"composer/installers": "^1.9 || ^2.0"
+		"composer/installers": "^1.9 || ^2.0",
+		"wildwolf/singleton-trait": "^1.0"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
@@ -37,8 +38,8 @@
 		"sort-packages": true
 	},
 	"scripts": {
-		"phpcs": "phpcs . -s",
-		"phpcs:fix": "phpcbf .",
+		"phpcs": "phpcs",
+		"phpcs:fix": "phpcbf",
 		"test": "phpunit",
 		"psalm": "psalm",
 		"phpstan": "phpstan analyze -c phpstan.neon.dist --no-interaction"

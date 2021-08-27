@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e53006a682eda5f33195254c098534d",
+    "content-hash": "5283d5b22ee147a9198a9d7b55da974c",
     "packages": [
         {
             "name": "composer/installers",
@@ -148,6 +148,47 @@
                 }
             ],
             "time": "2021-08-04T13:56:36+00:00"
+        },
+        {
+            "name": "wildwolf/singleton-trait",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sjinks/php-singleton-trait.git",
+                "reference": "88117db8716747d660d475b37eed8724c4aff916"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sjinks/php-singleton-trait/zipball/88117db8716747d660d475b37eed8724c4aff916",
+                "reference": "88117db8716747d660d475b37eed8724c4aff916",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Volodymyr Kolesnykov",
+                    "email": "volodymyr@wildwolf.name"
+                }
+            ],
+            "description": "Singleton Trait",
+            "support": {
+                "issues": "https://github.com/sjinks/php-singleton-trait/issues",
+                "source": "https://github.com/sjinks/php-singleton-trait/tree/1.0.1"
+            },
+            "time": "2021-08-27T19:20:08+00:00"
         }
     ],
     "packages-dev": [
@@ -4470,5 +4511,5 @@
         "php": "^7.3 || ^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
