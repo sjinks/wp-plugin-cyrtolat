@@ -5,16 +5,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         php:
           - "7.3"
           - "7.4"
+          - "8.0"
+        wpmu:
+          - "0"
+          - "1"
+        wordpress:
+          - latest
+          - trunk
+    services:
+      mysql:
+        image: mariadb:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=5s --health-retries=5
     steps:
       - name: Check out source code
         uses: actions/checkout@v2
@@ -41,55 +56,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-
-      - name: Archive the source
-        run: touch plugin-${{ matrix.php }}.tgz && tar czf plugin-${{ matrix.php }}.tgz --exclude=.git/ --exclude="*.tgz" ./
-
-      - name: Upload the source
-        uses: actions/upload-artifact@v2
-        with:
-          name: plugin-${{ matrix.php }}.tgz
-          path: plugin-${{ matrix.php }}.tgz
-          retention-days: 1
-
-  test:
-    name: Run tests
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      fail-fast: true
-      matrix:
-        php:
-          - "7.3"
-          - "7.4"
-        wpmu:
-          - "0"
-          - "1"
-        wordpress:
-          - latest
-          - trunk
-    services:
-      mysql:
-        image: mariadb:latest
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=5s --health-retries=5
-    steps:
-      - name: Download the source code
-        uses: actions/download-artifact@v2
-        with:
-          name: plugin-${{ matrix.php }}.tgz
-
-      - name: Extract the source code
-        run: tar xzf plugin-${{ matrix.php }}.tgz && rm -f plugin-${{ matrix.php }}.tgz
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
+        run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-reqs
 
       - name: Verify MariaDB connection
         run: |
