@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/sjinks/wp-plugin-cyrtolat/actions/workflows/ci.yaml/badge.svg)](https://github.com/sjinks/wp-plugin-cyrtolat/actions/workflows/ci.yaml)
 [![Static Code Analysis](https://github.com/sjinks/wp-plugin-cyrtolat/actions/workflows/static-code-analysis.yml/badge.svg)](https://github.com/sjinks/wp-plugin-cyrtolat/actions/workflows/static-code-analysis.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sjinks_wp-plugin-cyrtolat&metric=alert_status)](https://sonarcloud.io/dashboard?id=sjinks_wp-plugin-cyrtolat)
 
 WordPress plugin to transliterate cyrillic slugs into latin.
 
@@ -21,17 +22,13 @@ The plugin provides three custom filters:
 
 ## Installation
 
-**Via composer**
-
 Run from WordPress root directory
 
 ```
 composer require wildwolf/wp-cyrtolat
 ```
 
-**Traditional way**
-
-Upload the plugin to `wp-content/plugins/`, go to the Admin Dashboard => Plugins and activate the plugin.
+After that, please go to the Admin Dashboard => Plugins and activate the plugin.
 
 ## Configuration
 
