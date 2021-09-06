@@ -3,7 +3,7 @@
 Plugin Name: WW CyrToLat
 Description: Transliterates cyrillic characters in post names to latin ones.
 Author: Volodymyr Kolesnykov <volodymyr@wildwolf.name>
-Version: 3.0.0
+Version: 3.0.1
 */
 
 use WildWolf\WordPress\CyrToLat\Admin;
