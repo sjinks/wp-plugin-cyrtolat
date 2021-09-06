@@ -2,7 +2,7 @@
 
 use WildWolf\WordPress\CyrToLat\Plugin;
 
-class Test_Plugin extends WP_UnitTestCase {
+class Test_Plugin extends WP_UnitTestCase /* NOSONAR */ {
 
 	public function testDefaults(): void {
 		$expected = [
@@ -134,9 +134,10 @@ class Test_Plugin extends WP_UnitTestCase {
 
 		Plugin::instance()->reinstall_hooks();
 
-		$id1 = $this->factory->post->create( [ 'post_title' => 'Тестова запись' ] );
-		$id2 = $this->factory->post->create( [ 'post_title' => 'Тестова запись' ] );
-		$id3 = $this->factory->post->create( [ 'post_title' => 'Тестова запись' ] );
+		$params = [ 'post_title' => 'Тестова запись' ];
+		$id1    = $this->factory->post->create( $params );
+		$id2    = $this->factory->post->create( $params );
+		$id3    = $this->factory->post->create( $params );
 
 		$post1 = get_post( $id1 );
 		$post2 = get_post( $id2 );

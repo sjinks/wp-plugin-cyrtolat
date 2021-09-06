@@ -179,43 +179,29 @@ final class Plugin {
 		$lang   = $parts[0];
 		$tbl    = self::$table;
 
+		if ( in_array( $lang, [ 'bg', 'mk', 'ru', 'be' ], true ) ) {
+			$tbl['Ц'] = 'C';
+			$tbl['ц'] = 'c';
+		}
+
+		if ( in_array( $lang, [ 'bg', 'mk', 'ru' ], true ) ) {
+			$tbl['Г'] = 'G';
+			$tbl['г'] = 'g';
+			$tbl['И'] = 'I';
+			$tbl['и'] = 'i';
+		}
+
 		switch ( $lang ) {
 			case 'bg':
-				$tbl['Г'] = 'G';
-				$tbl['г'] = 'g';
-				$tbl['И'] = 'I';
-				$tbl['и'] = 'i';
-				$tbl['Ц'] = 'C';
-				$tbl['ц'] = 'c';
 				$tbl['Щ'] = 'STH';
 				$tbl['щ'] = 'sth';
 				$tbl['Ъ'] = 'A';
 				$tbl['ъ'] = 'a';
 				break;
 
-			case 'mk':
-				$tbl['Г'] = 'G';
-				$tbl['г'] = 'g';
-				$tbl['И'] = 'I';
-				$tbl['и'] = 'i';
-				$tbl['Ц'] = 'C';
-				$tbl['ц'] = 'c';
-				break;
-
 			case 'ru':
-				$tbl['Г'] = 'G';
-				$tbl['г'] = 'g';
-				$tbl['И'] = 'I';
-				$tbl['и'] = 'i';
-				$tbl['Ц'] = 'C';
-				$tbl['ц'] = 'c';
 				$tbl['Щ'] = 'SHH';
 				$tbl['щ'] = 'shh';
-				break;
-
-			case 'be':
-				$tbl['Ц'] = 'C';
-				$tbl['ц'] = 'c';
 				break;
 
 			default:
@@ -252,14 +238,13 @@ final class Plugin {
 		$value = preg_replace( '/-{2,}/', '-', $value );
 		$value = trim( $value, '-' );
 
-		return apply_filters( 'transliterate_name', $value, $what );
+		/** @psalm-suppress RedundantCastGivenDocblockType */
+		return (string) apply_filters( 'transliterate_name', $value, $what );
 	}
 
 	/**
-	 * @param array $name
-	 * @return array
-	 * @psalm-param array<array-key,mixed> $name
-	 * @psalm-return array<array-key,mixed>
+	 * @param mixed[] $name
+	 * @return mixed[]
 	 */
 	public function get_sample_permalink( array $name ): array {
 		/** @psalm-var array{0: string, 1: string} $name */
@@ -268,9 +253,9 @@ final class Plugin {
 	}
 
 	/**
-	 * @param array<array-key,mixed> $data
-	 * @param array<array-key,mixed> $args
-	 * @return array<array-key,mixed>
+	 * @param mixed[] $data
+	 * @param mixed[] $args
+	 * @return mixed[]
 	 */
 	public function wp_insert_post_data( array $data, array $args ): array {
 		/**
@@ -283,9 +268,9 @@ final class Plugin {
 	}
 
 	/**
-	 * @param array<array-key,mixed> $data
-	 * @param array<array-key,mixed> $args
-	 * @return array<array-key,mixed>
+	 * @param mixed[] $data
+	 * @param mixed[] $args
+	 * @return mixed[]
 	 */
 	public function wp_insert_attachment_data( array $data, array $args ): array {
 		/**
@@ -296,10 +281,10 @@ final class Plugin {
 	}
 
 	/**
-	 * @param array<array-key,mixed> $data
+	 * @param mixed[] $data
 	 * @param string $taxonomy
-	 * @param array<array-key,mixed> $args
-	 * @return array<array-key,mixed>
+	 * @param mixed[] $args
+	 * @return mixed[]
 	 */
 	public function wp_insert_term_data( $data, $taxonomy, $args ): array {
 		/** @psalm-var array{'slug': string} $data */
@@ -308,11 +293,11 @@ final class Plugin {
 	}
 
 	/**
-	 * @param array<array-key,mixed> $data
+	 * @param mixed[] $data
 	 * @param int $id
 	 * @param string $taxonomy
-	 * @param array<array-key,mixed> $args
-	 * @return array<array-key,mixed>
+	 * @param mixed[] $args
+	 * @return mixed[]
 	 */
 	public function wp_update_term_data( $data, $id, $taxonomy, $args ): array {
 		return $this->wp_insert_term_data( $data, $taxonomy, $args );
