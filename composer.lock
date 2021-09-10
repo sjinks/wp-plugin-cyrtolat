@@ -151,16 +151,16 @@
         },
         {
             "name": "wildwolf/singleton-trait",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sjinks/php-singleton-trait.git",
-                "reference": "f96dfb16264cb71f009a428a2966e0464c189f76"
+                "reference": "85bd69b27383a7ccce25202e0f8a9f69889dbcb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sjinks/php-singleton-trait/zipball/f96dfb16264cb71f009a428a2966e0464c189f76",
-                "reference": "f96dfb16264cb71f009a428a2966e0464c189f76",
+                "url": "https://api.github.com/repos/sjinks/php-singleton-trait/zipball/85bd69b27383a7ccce25202e0f8a9f69889dbcb9",
+                "reference": "85bd69b27383a7ccce25202e0f8a9f69889dbcb9",
                 "shasum": ""
             },
             "require-dev": {
@@ -184,11 +184,16 @@
                 }
             ],
             "description": "Singleton Trait",
+            "keywords": [
+                "php",
+                "singleton",
+                "trait"
+            ],
             "support": {
                 "issues": "https://github.com/sjinks/php-singleton-trait/issues",
-                "source": "https://github.com/sjinks/php-singleton-trait/tree/1.0.2"
+                "source": "https://github.com/sjinks/php-singleton-trait/tree/1.0.4"
             },
-            "time": "2021-08-30T03:37:41+00:00"
+            "time": "2021-09-06T08:56:03+00:00"
         }
     ],
     "packages-dev": [
@@ -976,16 +981,16 @@
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.8.0",
+            "version": "5.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "30d5db01a682521b0a6cc827953f016486504312"
+                "reference": "6b6004e8c16a3b9ebc3ddac29ca8542dfa5ec5ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/30d5db01a682521b0a6cc827953f016486504312",
-                "reference": "30d5db01a682521b0a6cc827953f016486504312",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/6b6004e8c16a3b9ebc3ddac29ca8542dfa5ec5ff",
+                "reference": "6b6004e8c16a3b9ebc3ddac29ca8542dfa5ec5ff",
                 "shasum": ""
             },
             "require": {
@@ -993,7 +998,7 @@
                 "php": ">=5.6.20"
             },
             "provide": {
-                "wordpress/core-implementation": "5.8.0"
+                "wordpress/core-implementation": "5.8.1"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -1020,7 +1025,7 @@
                 "source": "https://core.trac.wordpress.org/browser",
                 "wiki": "https://codex.wordpress.org/"
             },
-            "time": "2021-07-20T16:52:26+00:00"
+            "time": "2021-09-09T02:46:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3057,6 +3062,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-11-30T07:30:19+00:00"
         },
         {
@@ -4092,16 +4098,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.9.3",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "4c262932602b9bbab5020863d1eb22d49de0dbf4"
+                "reference": "916b098b008f6de4543892b1e0651c1c3b92cbfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/4c262932602b9bbab5020863d1eb22d49de0dbf4",
-                "reference": "4c262932602b9bbab5020863d1eb22d49de0dbf4",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/916b098b008f6de4543892b1e0651c1c3b92cbfa",
+                "reference": "916b098b008f6de4543892b1e0651c1c3b92cbfa",
                 "shasum": ""
             },
             "require": {
@@ -4111,6 +4117,7 @@
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "composer/xdebug-handler": "^1.1 || ^2.0",
                 "dnoegel/php-xdg-base-dir": "^0.1.1",
+                "ext-ctype": "*",
                 "ext-dom": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
@@ -4190,9 +4197,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.9.3"
+                "source": "https://github.com/vimeo/psalm/tree/4.10.0"
             },
-            "time": "2021-08-14T16:19:38+00:00"
+            "time": "2021-09-04T21:00:09+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4352,16 +4359,16 @@
         },
         {
             "name": "wildwolf/wordpress-test-library-stubs",
-            "version": "5.8.0.1",
+            "version": "5.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sjinks/wordpress-test-library-stubs.git",
-                "reference": "ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7"
+                "reference": "a549111cf56862528f89316be9a84161878222ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sjinks/wordpress-test-library-stubs/zipball/ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7",
-                "reference": "ec3a9af171b6b14e269b1d1d025d74b5f7eecfe7",
+                "url": "https://api.github.com/repos/sjinks/wordpress-test-library-stubs/zipball/a549111cf56862528f89316be9a84161878222ad",
+                "reference": "a549111cf56862528f89316be9a84161878222ad",
                 "shasum": ""
             },
             "require-dev": {
@@ -4382,9 +4389,9 @@
             "description": "Stubs for WordPress test library",
             "support": {
                 "issues": "https://github.com/sjinks/wordpress-test-library-stubs/issues",
-                "source": "https://github.com/sjinks/wordpress-test-library-stubs/tree/5.8.0.1"
+                "source": "https://github.com/sjinks/wordpress-test-library-stubs/tree/5.8.1"
             },
-            "time": "2021-08-14T14:39:12+00:00"
+            "time": "2021-09-10T05:14:56+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -4439,16 +4446,16 @@
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "5.8.0",
+            "version": "5.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",
-                "reference": "da3f6fc3bc5cae2c76af6f9a260620fc4f8d9f90"
+                "reference": "0b89ad32feae22f3a39e63e44117d6e56bdeed69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/da3f6fc3bc5cae2c76af6f9a260620fc4f8d9f90",
-                "reference": "da3f6fc3bc5cae2c76af6f9a260620fc4f8d9f90",
+                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/0b89ad32feae22f3a39e63e44117d6e56bdeed69",
+                "reference": "0b89ad32feae22f3a39e63e44117d6e56bdeed69",
                 "shasum": ""
             },
             "type": "library",
@@ -4483,7 +4490,7 @@
                 "issues": "https://github.com/wp-phpunit/issues",
                 "source": "https://github.com/wp-phpunit/wp-phpunit"
             },
-            "time": "2021-07-27T09:32:49+00:00"
+            "time": "2021-09-09T19:11:29+00:00"
         },
         {
             "name": "yoast/phpunit-polyfills",
