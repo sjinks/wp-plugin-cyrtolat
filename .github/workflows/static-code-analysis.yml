@@ -8,6 +8,8 @@ env:
 
 jobs:
   prepare:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     name: Prepare the source code
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -46,6 +48,8 @@ jobs:
           retention-days: 1
 
   psalm:
+    permissions:
+      contents: none
     runs-on: ubuntu-latest
     name: Psalm
     needs: prepare
@@ -67,6 +71,8 @@ jobs:
         run: vendor/bin/psalm --long-progress
 
   phpstan:
+    permissions:
+      contents: none
     runs-on: ubuntu-latest
     name: PHPStan
     needs: prepare
