@@ -122,7 +122,7 @@ final class Plugin {
 	];
 
 	private function __construct() {
-		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'init' ], 10, 0 );
 	}
 
 	public function init(): void {
@@ -208,6 +208,7 @@ final class Plugin {
 				break;
 		}
 
+		/** @psalm-var array<string,string> */
 		return apply_filters( 'wwcyrtolat_xlat_table', $tbl );
 	}
 
@@ -220,12 +221,14 @@ final class Plugin {
 		$lang   = $parts[0];
 
 		$tbl = ( 'uk' === $lang ) ? self::$retable : [];
+		/** @psalm-var array<string,string> */
 		return apply_filters( 'wwcyrtolat_xlat_re_table', $tbl );
 	}
 
 	private function transliterate( string $value, string $what ): string {
 		$retbl = $this->get_re_table();
 		if ( count( $retbl ) > 0 ) {
+			/** @psalm-suppress ArgumentTypeCoercion */
 			$value = (string) preg_replace( array_keys( $retbl ), array_values( $retbl ), $value );
 		}
 
@@ -238,16 +241,16 @@ final class Plugin {
 		$value = preg_replace( '/-{2,}/', '-', $value );
 		$value = trim( $value, '-' );
 
-		/** @psalm-suppress RedundantCastGivenDocblockType */
 		return (string) apply_filters( 'transliterate_name', $value, $what );
 	}
 
 	/**
 	 * @param mixed[] $name
 	 * @return mixed[]
+	 * @psalm-param array{0: string, 1: string} $name
+	 * @psalm-return array{0: string, 1: string}
 	 */
 	public function get_sample_permalink( array $name ): array {
-		/** @psalm-var array{0: string, 1: string} $name */
 		$name[1] = $this->transliterate( $name[1], 'post_name' );
 		return $name;
 	}
@@ -282,11 +285,11 @@ final class Plugin {
 
 	/**
 	 * @param mixed[] $data
-	 * @param string $taxonomy
+	 * @param string $_taxonomy
 	 * @param mixed[] $args
 	 * @return mixed[]
 	 */
-	public function wp_insert_term_data( $data, $taxonomy, $args ): array {
+	public function wp_insert_term_data( $data, $_taxonomy, $args ): array {
 		/** @psalm-var array{'slug': string} $data */
 		$data['slug'] = wp_unique_term_slug( $this->transliterate( urldecode( $data['slug'] ), 'term' ), (object) $args );
 		return $data;
@@ -294,12 +297,12 @@ final class Plugin {
 
 	/**
 	 * @param mixed[] $data
-	 * @param int $id
+	 * @param int $_id
 	 * @param string $taxonomy
 	 * @param mixed[] $args
 	 * @return mixed[]
 	 */
-	public function wp_update_term_data( $data, $id, $taxonomy, $args ): array {
+	public function wp_update_term_data( $data, $_id, $taxonomy, $args ): array {
 		return $this->wp_insert_term_data( $data, $taxonomy, $args );
 	}
 
