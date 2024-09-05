@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: Code Style Check
 
 on:
   push:
@@ -12,9 +12,11 @@ permissions:
   contents: read
 
 jobs:
-  psalm:
+  codestyle:
+    name: Run code style check
     runs-on: ubuntu-latest
-    name: Psalm
+    permissions:
+      contents: read
     steps:
       - name: Check out source code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -23,9 +25,14 @@ jobs:
         uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # 2.31.1
         with:
           coverage: none
+        env:
+          fail-fast: 'true'
 
       - name: Install dependencies
         uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
 
-      - name: Run psalm
-        run: composer psalm -- --output-format=github
+      - name: Add error matcher
+        run: echo "::add-matcher::$(pwd)/.github/checkstyle-problem-matcher.json"
+
+      - name: Run style check
+        run: composer phpcs -- --report=checkstyle

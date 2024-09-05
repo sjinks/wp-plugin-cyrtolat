@@ -11,14 +11,14 @@ final class Admin {
 	const OPTIONS_KEY = Plugin::OPTIONS_KEY;
 
 	private function __construct() {
-		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'init' ], 10, 0 );
 	}
 
 	public function init(): void {
 		load_plugin_textdomain( 'wwc2r', false, plugin_basename( dirname( __DIR__ ) ) . '/lang/' ); // phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
 
-		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-		add_action( 'admin_init', [ $this, 'admin_init' ] );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ], 10, 0 );
+		add_action( 'admin_init', [ $this, 'admin_init' ], 10, 0 );
 	}
 
 	public function admin_menu(): void {
@@ -41,10 +41,11 @@ final class Admin {
 		$name    = esc_attr( self::OPTIONS_KEY );
 		$id      = esc_attr( $args['label_for'] );
 		$checked = checked( $options[ $id ], 1, false );
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// phpcs:disable WordPress.Security.EscapeOutput.HeredocOutputNotEscaped
 		echo <<< EOT
 <input type="checkbox" name="{$name}[{$id}]" id="{$id}" value="1"{$checked}/>
 EOT;
+		// phpcs:enable
 	}
 
 	public function options_page(): void {

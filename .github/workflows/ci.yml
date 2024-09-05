@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: "WP ${{ matrix.config.wp }}, multisite: ${{ matrix.config.ms }}, PHP: ${{ matrix.config.php }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { wp: latest,  ms: 'no',  php: '8.1' }
+          - { wp: nightly, ms: 'no',  php: '8.1' }
+          - { wp: latest,  ms: 'yes', php: '8.1' }
+          - { wp: nightly, ms: 'yes', php: '8.1' }
+          - { wp: latest,  ms: 'no',  php: '8.2' }
+          - { wp: nightly, ms: 'no',  php: '8.2' }
+          - { wp: latest,  ms: 'yes', php: '8.2' }
+          - { wp: nightly, ms: 'yes', php: '8.2' }
+          - { wp: latest,  ms: 'no',  php: '8.3' }
+          - { wp: nightly, ms: 'no',  php: '8.3' }
+          - { wp: latest,  ms: 'yes', php: '8.3' }
+          - { wp: nightly, ms: 'yes', php: '8.3' }
+    services:
+      mysql:
+        image: mariadb:latest@sha256:346f3a6792bf88014a9d9290927c12c13522a50e0e7e6d40aaa9add73df0bcc6
+        ports:
+          - "3306:3306"
+        env:
+          MYSQL_ROOT_PASSWORD: wordpress
+          MARIADB_INITDB_SKIP_TZINFO: 1
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
+          MYSQL_DATABASE: wordpress_test
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # 2.31.1
+        with:
+          coverage: none
+          php-version: ${{ matrix.config.php }}
+        env:
+          fail-fast: 'true'
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
+
+      - name: Set up WordPress and WordPress Test Library
+        uses: sjinks/setup-wordpress-test-library@920da8b20f169f20c5a05fc43197083b9ee39f8a # v2.0.3
+        with:
+          version: ${{ matrix.config.wp }}
+
+      - name: Set up multisite mode
+        run: echo "WP_MULTISITE=1" >> $GITHUB_ENV
+        if: matrix.config.ms == 'yes'
+
+      - name: Verify MariaDB connection
+        run: |
+          while ! mysqladmin ping -h 127.0.0.1 -P ${{ job.services.mysql.ports[3306] }} --silent; do
+            sleep 1
+          done
+        timeout-minutes: 1
+
+      - name: Run tests
+        run: vendor/bin/phpunit --order-by=random
